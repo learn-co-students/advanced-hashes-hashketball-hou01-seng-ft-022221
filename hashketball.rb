@@ -1,4 +1,5 @@
-# Write your code below game_hash
+require "pry"
+
 def game_hash
   {
     home: {
@@ -126,4 +127,87 @@ def game_hash
   }
 end
 
-# Write code here
+def team(team_name)
+  case team_name
+  when game_hash[:home][:team_name]
+    game_hash[:home]
+  when game_hash[:away][:team_name]
+    game_hash[:away]
+  end
+end
+
+def team_names
+  [game_hash[:home][:team_name], game_hash[:away][:team_name]]
+end
+
+def team_colors(team_name)
+  game_hash.each do |location, team_data|
+    if team_data[:team_name] == team_name
+      return team_data[:colors]
+    end
+  end
+end
+
+def home_team_points
+  home_points = team("Brooklyn Nets")[:players].map { |points:, **| points }.sum
+end
+
+def away_team_points
+  away_points = team("Charlotte Hornets")[:players].map { |points:, **| points }.sum
+end
+
+def all_players
+  game_hash[:home][:players] + game_hash[:away][:players]
+end
+
+def get_player_by_name(player_name)
+  all_players.find {|player| player[:player_name] == player_name}
+end
+
+def num_points_scored(player_name)
+  get_player_by_name(player_name)[:points]
+end
+
+def shoe_size(player_name)
+  get_player_by_name(player_name)[:shoe]
+end
+
+def player_with_largest_shoe(all_players)
+  all_players.max { |p1, p2| p1[:shoe] <=> p2[:shoe] }
+end
+
+def player_with_most_points(all_players)
+  all_players.max { |p1, p2| p1[:points] <=> p2[:points] }
+end
+
+def player_numbers(team_name)
+  team(team_name)[:players].map { |number:, **| number }
+end
+
+def player_stats(player_name)
+  get_player_by_name(player_name)
+end
+
+def big_shoe_rebounds
+ player_with_largest_shoe(all_players)[:rebounds]
+end
+
+# Bonus Questions:
+
+def most_points_scored
+  player_with_most_points(all_players)[:player_name]
+end
+
+def winning_team
+  if away_team_points > home_team_points
+    return game_hash[:away][:team_name]
+  else
+    return game_hash[:home][:team_name]
+  end
+end
+
+def player_with_longest_name
+  longest_name = all_players.max { |p1, p2| p1[:player_name].length <=> p2[:player_name].length }
+  longest_name[:player_name]
+end
+  
