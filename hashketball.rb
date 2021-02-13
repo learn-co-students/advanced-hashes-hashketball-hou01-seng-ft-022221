@@ -1,4 +1,5 @@
 # Write your code below game_hash
+require "pry"
 def game_hash
   {
     home: {
@@ -126,4 +127,76 @@ def game_hash
   }
 end
 
+#binding.pry
+
 # Write code here
+def num_points_scored(player_name)
+  game_hash.each do |key, value|
+    value[:players].each_with_index do |inner_key, inner_index|
+      if value[:players][inner_index][:player_name] == player_name
+        return value[:players][inner_index][:points]
+      end
+    end
+  end
+end
+
+def shoe_size(player_name)
+  game_hash.each do |key, value|
+    value[:players].each_with_index do |inner_key, inner_index|
+      if value[:players][inner_index][:player_name] == player_name
+        return value[:players][inner_index][:shoe]
+      end
+    end
+  end
+end
+
+def team_colors(team_name)
+  game_hash.each do |key, value| 
+    if value[:team_name] == team_name
+      return value[:colors] 
+    end
+  end
+end
+
+def team_names
+  [game_hash[:home][:team_name], game_hash[:away][:team_name]]
+end
+
+def player_numbers(team_name)
+  numbers = []
+  game_hash.each do |key, value|
+    if value[:team_name] == team_name
+      value.each do |key, value|
+    if key == :players
+      value.each do |player|
+    numbers.push(player[:number])
+          end
+        end
+      end
+    end
+  end
+  return numbers
+end
+
+def player_stats(player_name)
+  game_hash.each do |key, value|
+    value[:players].each_with_index do |inner_key, inner_index|
+      if value[:players][inner_index][:player_name] == player_name
+        return value[:players][inner_index]
+      end
+    end
+  end
+end
+
+def big_shoe_rebounds
+  players = game_hash[:home][:players].concat(game_hash[:away][:players])
+  #shoe_size = game_hash[:home][:players][:shoe].concat(game_hash[:away][:players][:shoe])
+  players.each do |inner_value|
+    if inner_value[:shoe] > 18
+      return inner_value[:rebounds]
+      end
+    end
+end
+
+
+
