@@ -1,3 +1,5 @@
+require 'pry'
+#rspec spec/hashketball_spec.rb:50
 # Write your code below game_hash
 def game_hash
   {
@@ -124,6 +126,82 @@ def game_hash
       ]
     }
   }
+  
 end
 
-# Write code here
+def num_points_scored(player_n)
+  game_hash.each do |home_away, keys|
+    
+    keys[:players].each do |player|
+     
+      return player[:points] if player[:player_name] == player_n
+       
+    end
+  end
+end
+  
+def shoe_size(player_n)
+  game_hash.each do |home_away,keys|
+    keys[:players].each do |player|
+    return player[:shoe] if player[:player_name]==player_n
+    end
+  end
+end
+
+
+def team_colors(t_name)
+  game_hash.each do |home_away, keys|
+    if keys[:team_name] == t_name
+      return keys[:colors].map(&:capitalize)
+    end
+  end
+end
+
+def team_names
+  game_hash.map {|home_away, keys| keys[:team_name]}
+end
+
+
+def player_numbers(team_name)
+  game_hash.each do |home_away, keys|
+    if keys[:team_name] == team_name
+      return keys[:players].map { |player| player[:number] }
+    end
+  end
+end
+  
+  def player_stats(player_name)
+	game_hash.each do |location, team_data|
+	 
+		team_data[:players].each do |a|
+		   
+			if a[:player_name] == player_name
+				my_hash = a
+			   return my_hash
+				
+			end
+		end
+	end
+end
+
+def big_shoe_rebounds
+	#find largest shoe size
+	max_size = 0
+	game_hash.each do |location, team_data|
+		team_data[:players].each {|a| max_size = a[:shoe] if a[:shoe] > max_size }
+	end
+
+ 	#get that from the array
+	rebounds = nil
+	game_hash.each do |location, team_data|
+		team_data[:players].each {|a| rebounds = a[:rebounds] if a[:shoe] == max_size }
+	end
+	return rebounds
+end
+
+
+ #puts player_stats("Bismak Biyombo")
+#puts team_colors("Brooklyn Nets")
+#puts team_names()
+
+  
