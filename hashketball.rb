@@ -126,4 +126,96 @@ def game_hash
   }
 end
 
-# Write code here
+def num_points_scored(input_player)
+  score = 0
+  game_hash[:home][:players].each do |player| 
+    if input_player == player[:player_name]
+      score = player[:points]
+    end
+  end
+  game_hash[:away][:players].each do |player| 
+    if input_player == player[:player_name]
+      score = player[:points]
+    end
+  end
+  score
+end
+
+
+def shoe_size(input_player)
+  score = 0
+  game_hash[:home][:players].each do |player| 
+    if input_player == player[:player_name]
+      score = player[:shoe]
+    end
+  end
+  game_hash[:away][:players].each do |player| 
+    if input_player == player[:player_name]
+      score = player[:shoe]
+    end
+  end
+  score
+end
+
+def team_colors(team)
+  colours = []
+  if game_hash[:home][:team_name] == team
+    colours = game_hash[:home][:colors]
+  end
+  if game_hash[:away][:team_name] == team
+    colours = game_hash[:away][:colors]
+  end
+  colours
+end
+
+def team_names
+  [game_hash[:home][:team_name],game_hash[:away][:team_name]]
+end
+
+def player_numbers(team)
+  numbers = []
+  if game_hash[:home][:team_name] == team
+    game_hash[:home][:players].each do |player|
+      numbers.push(player[:number])
+    end
+  end
+  if game_hash[:away][:team_name] == team
+    game_hash[:away][:players].each do |player|
+      numbers.push(player[:number])
+    end
+  end
+  numbers
+end
+
+def player_stats(input_player)
+  give = []
+  game_hash[:home][:players].each do |player|
+    if player[:player_name] == input_player
+      give = player
+    end
+  end
+  game_hash[:away][:players].each do |player|
+    if player[:player_name] == input_player
+      give = player
+    end
+  end
+  give
+end
+
+def big_shoe_rebounds
+  shoe_size = 0
+  rebounds = 0
+  game_hash[:home][:players].each do |player|
+    if player[:shoe] > shoe_size
+      shoe_size = player[:shoe]
+      rebounds = player[:rebounds]
+    end
+  end
+  game_hash[:away][:players].each do |player|
+    if player[:shoe] > shoe_size
+      shoe_size = player[:shoe]
+      rebounds = player[:rebounds]
+    end
+  end
+  rebounds
+end
